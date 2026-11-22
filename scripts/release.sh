@@ -31,7 +31,7 @@ if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
   exit 1
 fi
 
-echo "==> 本地构建校验（$TAG）"
+echo "==> 本地构建校验 (${TAG})"
 (
   cd android
   JAVA_HOME="${JAVA_HOME:-$HOME/android-tools/jdk-17}" \
@@ -47,7 +47,7 @@ REMOTE_URL="$(git remote get-url origin)"
 SLUG="$(printf '%s' "$REMOTE_URL" | sed -E 's#(git@|https://)github\.com[:/]##; s#\.git$##')"
 
 echo
-echo "已推送 $TAG。GitHub Actions 会自动构建并发布 Release："
+echo "已推送 ${TAG}。GitHub Actions 会自动构建并发布 Release："
 echo "  https://github.com/${SLUG}/actions"
 echo "发布页："
 echo "  https://github.com/${SLUG}/releases"
