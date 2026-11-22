@@ -3,6 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+// 版本号可由 CI / 命令行注入：-PappVersionName=0.2.0 -PappVersionCode=12
+val appVersionName = providers.gradleProperty("appVersionName").orNull ?: "0.1.0"
+val appVersionCode = providers.gradleProperty("appVersionCode").orNull?.toIntOrNull() ?: 1
+
 android {
     namespace = "com.example.tvinstaller"
     compileSdk = 34
@@ -11,8 +15,8 @@ android {
         applicationId = "com.example.tvinstaller"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = appVersionCode
+        versionName = appVersionName
     }
 
     buildTypes {

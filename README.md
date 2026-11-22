@@ -50,6 +50,44 @@ adb install -r android/app/build/outputs/apk/debug/app-debug.apk
 
 ---
 
+## 发布 Release
+
+APK **不入库**（`.gitignore` 已排除 `dist/*.apk`），而是作为 GitHub Release 的附件发布。
+
+### 一条命令发版
+
+```bash
+./scripts/release.sh 0.2.0
+```
+
+它会：检查工作区干净 → 本机构建校验 → 打 `v0.2.0` 标签并推送 → GitHub Actions 自动构建、把 APK 改名为 `tv-apk-installer-0.2.0-debug.apk`、生成 `SHA256SUMS.txt`、创建 Release。
+
+- 构建进度：https://github.com/yohoj/tv-apk-installer/actions
+- 发布页：https://github.com/yohoj/tv-apk-installer/releases
+
+版本号由标签注入（`android/app/build.gradle.kts` 支持 `-PappVersionName` / `-PappVersionCode`），所以 Release 附件里的 APK `versionName` 与标签一致。
+
+### 手动方式
+
+打标签推送，效果和脚本一样（会自动构建并发 Release）：
+
+```bash
+git tag -a v0.2.0 -m "Release v0.2.0"
+git push origin v0.2.0
+```
+
+或者在 GitHub 网页 **Releases → Draft a new release** 上传本地构建产物：
+
+```bash
+cd android
+JAVA_HOME=$HOME/android-tools/jdk-17 ./gradlew assembleDebug
+cp app/build/outputs/apk/debug/app-debug.apk ../dist/tv-apk-installer-0.2.0-debug.apk
+```
+
+> 目前是 debug 签名，便于侧载。若要长期正式分发，建议换成自己的 release keystore。
+
+---
+
 ## 工作原理
 
 ```
