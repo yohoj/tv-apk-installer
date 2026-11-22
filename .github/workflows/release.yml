@@ -22,7 +22,7 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Build debug APK
+      - name: Build release APK
         working-directory: android
         env:
           TAG: ${{ github.ref_name }}
@@ -30,7 +30,7 @@ jobs:
         run: |
           VERSION="${TAG#v}"
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon \
+          ./gradlew assembleRelease --no-daemon \
             -PappVersionName="$VERSION" \
             -PappVersionCode="$BUILD_NUMBER"
 
@@ -40,8 +40,8 @@ jobs:
         run: |
           VERSION="${TAG#v}"
           mkdir -p release
-          cp android/app/build/outputs/apk/debug/app-debug.apk \
-            "release/tv-apk-installer-${VERSION}-debug.apk"
+          cp android/app/build/outputs/apk/release/app-release.apk \
+            "release/tv-apk-installer-${VERSION}-release.apk"
           (cd release && shasum -a 256 *.apk > SHA256SUMS.txt || sha256sum *.apk > SHA256SUMS.txt)
 
       - name: Publish release

@@ -26,6 +26,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            // 暂用 debug keystore 签名，保证 release 包可直接侧载；
+            // 后续换成正式 keystore 时，改为 signingConfigs.getByName("release") 并配置密钥。
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 

@@ -36,7 +36,7 @@ echo "==> 本地构建校验 (${TAG})"
   cd android
   JAVA_HOME="${JAVA_HOME:-$HOME/android-tools/jdk-17}" \
   ANDROID_HOME="${ANDROID_HOME:-$HOME/android-tools/android-sdk}" \
-    ./gradlew assembleDebug --no-daemon -q -PappVersionName="${TAG#v}"
+    ./gradlew assembleRelease --no-daemon -q -PappVersionName="${TAG#v}"
 )
 
 echo "==> 打标签 $TAG 并推送"

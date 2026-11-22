@@ -16,9 +16,8 @@
 
 ```bash
 cd android
-JAVA_HOME=$HOME/android-tools/jdk-17 ./gradlew assembleDebug
-# 产物：android/app/build/outputs/apk/debug/app-debug.apk
-# 已构建好的可直接装：dist/tv-apk-installer-0.1.0-debug.apk
+JAVA_HOME=$HOME/android-tools/jdk-17 ./gradlew assembleRelease
+# 产物：android/app/build/outputs/apk/release/app-release.apk
 ```
 
 需要 JDK 17 与 Android SDK（`compileSdk 34`，路径写在 `android/local.properties` 的 `sdk.dir`）。
@@ -60,7 +59,7 @@ APK **不入库**（`.gitignore` 已排除 `dist/*.apk`），而是作为 GitHub
 ./scripts/release.sh 0.2.0
 ```
 
-它会：检查工作区干净 → 本机构建校验 → 打 `v0.2.0` 标签并推送 → GitHub Actions 自动构建、把 APK 改名为 `tv-apk-installer-0.2.0-debug.apk`、生成 `SHA256SUMS.txt`、创建 Release。
+它会：检查工作区干净 → 本机构建校验 → 打 `v0.2.0` 标签并推送 → GitHub Actions 自动构建、把 APK 改名为 `tv-apk-installer-0.2.0-release.apk`、生成 `SHA256SUMS.txt`、创建 Release。
 
 - 构建进度：https://github.com/yohoj/tv-apk-installer/actions
 - 发布页：https://github.com/yohoj/tv-apk-installer/releases
@@ -80,11 +79,11 @@ git push origin v0.2.0
 
 ```bash
 cd android
-JAVA_HOME=$HOME/android-tools/jdk-17 ./gradlew assembleDebug
-cp app/build/outputs/apk/debug/app-debug.apk ../dist/tv-apk-installer-0.2.0-debug.apk
+JAVA_HOME=$HOME/android-tools/jdk-17 ./gradlew assembleRelease
+cp app/build/outputs/apk/release/app-release.apk ../dist/tv-apk-installer-0.2.0-release.apk
 ```
 
-> 目前是 debug 签名，便于侧载。若要长期正式分发，建议换成自己的 release keystore。
+> release 构建暂用 debug keystore 签名（已在 `build.gradle.kts` 配好），可直接侧载；若要长期正式分发，换成自己的 release keystore。
 
 ---
 
