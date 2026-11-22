@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">电视 APK 安装助手</string>
+    <string name="notification_channel_name">APK 推送</string>
+    <string name="notification_title">正在推送 APK</string>
+</resources>

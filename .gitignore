@@ -1,0 +1,17 @@
+# 构建产物
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+*.iml
+
+# 本地产物
+dist/*.apk
+
+# 系统文件
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
